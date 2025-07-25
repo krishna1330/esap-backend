@@ -3,6 +3,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
+const { swaggerUi, swaggerSpec } = require('./config/swagger');
+
 require('dotenv').config();
 
 const { sequelize } = require('./database/models');
@@ -15,6 +17,7 @@ app.use(cors());
 app.use(compression());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // health
 app.get('/health', async (req, res) => {
