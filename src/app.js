@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const { sequelize } = require('./database/models');
 const usersRoutes = require('./routes/users.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/health', async (req, res) => {
     }
 });
 
+app.use('/api/auth', authRoutes);
 app.use('/api/admins', usersRoutes);
 
 // 404

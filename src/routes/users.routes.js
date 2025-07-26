@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { getAdmins, createAdmin } = require('../controllers/users.controller');
+const { authenticate } = require('../middlewares/auth');
 
 const router = Router();
 
@@ -8,19 +9,19 @@ const router = Router();
  * /api/admins:
  *   get:
  *     summary: Get all admin users
- *     tags: [Admins]
+ *     tags: [Users]
  *     responses:
  *       200:
- *         description: List of admins
+ *         description: List of admins  
  */
-router.get('/', getAdmins);
+router.get('/', authenticate, getAdmins);
 
 /**
  * @swagger
  * /api/admins:
- *   post:
+ *   post:  
  *     summary: Create an admin (role_id = 2)
- *     tags: [Admins]
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -49,6 +50,6 @@ router.get('/', getAdmins);
  *       409:
  *         description: Email already exists
  */
-router.post('/', createAdmin);
+router.post('/', authenticate, createAdmin);
 
 module.exports = router;
